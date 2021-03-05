@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped" style="text-align:left">
+    <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>TOTAL</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="4"></td>
+            <td><b>$10,000.00</b></td>
+        </tr>
+    </tfoot>
+    <tbody>
+        {% if size > 0 %}
+            {% for purchase in purchase %}
+                {% if purchase["shares"] > 0 %}
+                    <tr>
+                        <td>{{ purchase["symbol"]|upper }}</td>
+                        <td>{{ purchase["name"] }}</td>
+                        <td>{{ purchase["shares"] }}</td>
+                        <td>${{ purchase["price"] }}</td>
+                        <td>{{ "${:,.2f}".format(purchase["shares"] * purchase["price"]) }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>{{ "${:,.2f}".format(10000 - cash) }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>$10,000.00</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+
+
+
+{% endblock %}
